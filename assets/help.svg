@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <circle cx="50" cy="50" r="48" fill="#133863" />
+  <!-- Bulb glass shape -->
+  <path d="M 37 60 C 31 53, 30 38, 38 27 C 45 18, 55 18, 62 27 C 70 38, 69 53, 63 60" 
+        fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" />
+  <!-- Bulb base screw threads -->
+  <path d="M 39 63 L 61 63" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" />
+  <path d="M 40 63 L 37 68 L 63 68 L 60 63" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 38 70 L 40 76 C 41 78, 59 78, 60 76 L 62 70" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

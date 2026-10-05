@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <circle cx="50" cy="50" r="48" fill="#133863" />
+  <!-- Roof -->
+  <polyline points="21,43 50,15 79,43" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- House base and door -->
+  <path d="M 28 42 L 28 77 L 43 77 L 43 56 L 57 56 L 57 77 L 72 77 L 72 42" 
+        fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

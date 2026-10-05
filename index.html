@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#17365e">
+  <meta name="description" content="מעבדת שקול כוחות אינטראקטיבית מבית פריזמה">
+  <title>כוח בתנועה | פריזמה</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2317365e'/%3E%3Cpath d='M12 32h34M38 22l12 10-12 10' fill='none' stroke='%236db580' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">דלגו לתוכן</a>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="top-actions" aria-label="פעולות">
+        <button class="icon-button" id="homeButton" type="button" aria-label="חזרה למסך הבית" title="בית"><img src="assets/home.svg" alt=""></button>
+        <button class="icon-button" id="resetButton" type="button" aria-label="איפוס הכוחות" title="איפוס"><img src="assets/reset.svg" alt=""></button>
+        <button class="icon-button" id="helpButton" type="button" aria-label="פתיחת עזרה" title="עזרה"><img src="assets/help.svg" alt=""></button>
+        <button class="icon-button" id="soundButton" type="button" aria-label="השתקת צלילים" title="צלילים"><img id="soundIcon" src="assets/speaker.svg" alt=""></button>
+      </div>
+      <div class="brand-title">
+        <p class="eyebrow">מעבדת מדעים אינטראקטיבית</p>
+        <h1>כוח בתנועה</h1>
+      </div>
+      <img class="logo" src="assets/logo.svg" alt="Prisming - פריזמה">
+    </header>
+
+    <main id="main">
+      <section class="screen start-screen is-active" id="startScreen" aria-labelledby="welcomeTitle">
+        <div class="start-glow" aria-hidden="true"></div>
+        <div class="start-content">
+          <div class="start-copy">
+            <span class="topic-pill">כוחות ותנועה · כיתה ח׳</span>
+            <h2 id="welcomeTitle">מי מזיז את הגוף?</h2>
+            <p>משנים כוחות, עוקבים אחרי השקול ומגלים איך הגודל והכיוון משפיעים על התנועה.</p>
+            <div class="start-actions">
+              <button class="primary-button" id="missionStart" type="button"><span>מתחילים באתגר</span><img src="assets/levels.svg" alt=""></button>
+              <button class="secondary-button" id="exploreStart" type="button">כניסה למעבדה חופשית</button>
+            </div>
+            <button class="text-button" id="startHelp" type="button">איך משתמשים במעבדה?</button>
+          </div>
+          <div class="hero-visual" aria-hidden="true">
+            <svg viewBox="0 0 620 440" role="img">
+              <defs>
+                <linearGradient id="heroSky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#dff6fb"/><stop offset="1" stop-color="#f9fdff"/></linearGradient>
+                <filter id="heroShadow"><feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#17365e" flood-opacity=".18"/></filter>
+              </defs>
+              <rect x="25" y="28" width="570" height="360" rx="38" fill="url(#heroSky)" stroke="#fff" stroke-width="8"/>
+              <circle cx="500" cy="92" r="34" fill="#f7d68b" opacity=".9"/>
+              <path d="M30 306 Q155 248 285 306 T590 300 V390 H30Z" fill="#b7d9c0"/>
+              <path d="M32 336 Q190 285 337 340 T590 322 V390 H32Z" fill="#80b98e"/>
+              <ellipse cx="310" cy="350" rx="150" ry="25" fill="#17365e" opacity=".12"/>
+              <g filter="url(#heroShadow)">
+                <rect x="230" y="204" width="160" height="120" rx="18" fill="#e7b976" stroke="#17365e" stroke-width="7"/>
+                <path d="M246 222 L374 306 M374 222 L246 306" stroke="#bd8651" stroke-width="7" opacity=".65"/>
+                <circle cx="265" cy="337" r="18" fill="#17365e"/><circle cx="355" cy="337" r="18" fill="#17365e"/>
+                <circle cx="265" cy="337" r="7" fill="#fff"/><circle cx="355" cy="337" r="7" fill="#fff"/>
+              </g>
+              <g class="hero-arrow"><path d="M390 263 H535" stroke="#832058" stroke-width="14" stroke-linecap="round"/><path d="M526 233 L570 263 L526 293Z" fill="#832058"/></g>
+              <g class="hero-arrow hero-arrow-left"><path d="M230 263 H102" stroke="#6db580" stroke-width="14" stroke-linecap="round"/><path d="M110 233 L66 263 L110 293Z" fill="#6db580"/></g>
+              <g transform="translate(310 202)"><path d="M0 0 V-102" stroke="#e3a735" stroke-width="12" stroke-linecap="round"/><path d="M-28 -94 L0 -134 L28 -94Z" fill="#e3a735"/></g>
+              <g transform="translate(310 326)"><path d="M0 0 V60" stroke="#17365e" stroke-width="12" stroke-linecap="round"/><path d="M-26 53 L0 92 L26 53Z" fill="#17365e"/></g>
+              <g class="spark" transform="translate(105 112)"><path d="M0-15V15M-15 0H15" stroke="#832058" stroke-width="7" stroke-linecap="round"/></g>
+              <g class="spark spark-two" transform="translate(520 168)"><path d="M0-12V12M-12 0H12" stroke="#6db580" stroke-width="6" stroke-linecap="round"/></g>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen lab-screen" id="labScreen" aria-labelledby="labTitle">
+        <div class="status-strip">
+          <div class="mode-chip"><span class="mode-dot"></span><span id="modeLabel">מעבדה חופשית</span></div>
+          <div class="mission-progress" id="missionProgress" hidden>
+            <img src="assets/levels.svg" alt=""><span id="missionCounter">משימה 1 מתוך 5</span>
+            <div class="progress-track" aria-hidden="true"><span id="progressFill"></span></div>
+          </div>
+          <div class="score-chip" id="scoreChip" hidden><img src="assets/star.svg" alt=""><span><strong id="scoreValue">0</strong> נק׳</span></div>
+        </div>
+
+        <div class="lab-layout">
+          <aside class="mission-card" id="missionCard" hidden>
+            <span class="card-kicker">המשימה שלכם</span>
+            <h2 id="missionTitle">יוצרים שיווי משקל</h2>
+            <p id="missionText">כוונו את הכוחות כך ששקול הכוחות יהיה אפס.</p>
+            <div class="target-badge"><span>יעד</span><strong id="missionTarget" dir="ltr">ΣF = 0 N</strong></div>
+            <div class="mission-feedback" id="missionFeedback" role="status" aria-live="polite"></div>
+            <button class="check-button" id="checkButton" type="button">בדיקת המשימה</button>
+            <button class="next-button" id="nextButton" type="button" hidden>למשימה הבאה</button>
+          </aside>
+
+          <section class="simulation-card" aria-labelledby="labTitle">
+            <div class="sim-heading">
+              <div><span class="card-kicker">אזור הניסוי</span><h2 id="labTitle">גררו את קצות החצים או השתמשו במחוונים</h2></div>
+              <div class="resultant-readout" id="resultantReadout" aria-live="polite"><span>שקול הכוחות</span><strong dir="ltr">0 N</strong><small>הגוף במנוחה</small></div>
+            </div>
+            <div class="simulation-wrap" id="simulationWrap">
+              <svg id="forceCanvas" class="force-canvas" viewBox="0 0 800 480" role="img" aria-labelledby="canvasTitle canvasDesc">
+                <title id="canvasTitle">הדמיית גוף וארבעה כוחות</title>
+                <desc id="canvasDesc">ארגז על משטח ועליו כוח מופעל, חיכוך, כוח נורמלי וכוח כובד. אפשר לגרור את קצות הווקטורים.</desc>
+                <defs>
+                  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#e6f7fb"/><stop offset="1" stop-color="#ffffff"/></linearGradient>
+                  <linearGradient id="crate" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f2c980"/><stop offset="1" stop-color="#d69b58"/></linearGradient>
+                  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#17365e" stroke-opacity=".055" stroke-width="1"/></pattern>
+                  <filter id="shadow"><feDropShadow dx="0" dy="10" stdDeviation="8" flood-color="#17365e" flood-opacity=".2"/></filter>
+                  <marker id="arrowApplied" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#832058"/></marker>
+                  <marker id="arrowFriction" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#d68532"/></marker>
+                  <marker id="arrowNormal" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#6db580"/></marker>
+                  <marker id="arrowWeight" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#17365e"/></marker>
+                  <marker id="arrowNet" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#b12b72"/></marker>
+                </defs>
+                <rect width="800" height="480" rx="28" fill="url(#sky)"/>
+                <rect width="800" height="480" rx="28" fill="url(#grid)"/>
+                <g class="background-art" aria-hidden="true"><circle cx="90" cy="76" r="30" fill="#f9d98f" opacity=".85"/><path d="M22 340Q165 280 290 345T510 332T790 335V420H22Z" fill="#c4e3cb"/><path d="M0 375Q145 323 295 380T535 362T800 360V430H0Z" fill="#8ec19b"/></g>
+                <g id="movingBody">
+                  <ellipse cx="400" cy="383" rx="112" ry="18" fill="#17365e" opacity=".13"/>
+                  <g filter="url(#shadow)"><rect x="330" y="245" width="140" height="112" rx="16" fill="url(#crate)" stroke="#17365e" stroke-width="6"/><path d="M345 261L455 341M455 261L345 341" stroke="#a96e43" stroke-width="6" opacity=".55"/><rect x="378" y="232" width="44" height="18" rx="8" fill="#17365e"/></g>
+                  <g class="cart"><path d="M305 360H495L477 385H323Z" fill="#832058"/><circle cx="350" cy="393" r="17" fill="#17365e"/><circle cx="450" cy="393" r="17" fill="#17365e"/><circle cx="350" cy="393" r="6" fill="#fff"/><circle cx="450" cy="393" r="6" fill="#fff"/></g>
+                </g>
+                <g id="vectors"></g>
+                <g id="netVector" class="net-vector"></g>
+              </svg>
+              <div class="motion-banner" id="motionBanner"><span class="motion-icon" aria-hidden="true">•</span><strong>שיווי משקל</strong><small>השקול הוא אפס</small></div>
+            </div>
+            <div class="sim-footer">
+              <label class="toggle"><input id="showValues" type="checkbox" checked><span></span>הצגת ערכים</label>
+              <label class="toggle"><input id="showNet" type="checkbox" checked><span></span>הצגת השקול</label>
+              <label class="toggle"><input id="animateBody" type="checkbox" checked><span></span>הדמיית תנועה</label>
+            </div>
+          </section>
+
+          <aside class="controls-card" aria-label="בקרת הכוחות">
+            <div class="controls-heading"><span class="card-kicker">לוח הכוחות</span><h2>משנים ובודקים</h2></div>
+            <div class="force-control applied-control">
+              <div class="force-label"><span class="force-swatch"></span><div><strong>כוח מופעל</strong><small>ימינה (+) · שמאלה (−)</small></div><output id="appliedOutput" dir="ltr">60 N</output></div>
+              <input id="appliedInput" type="range" min="-120" max="120" step="10" value="60" aria-label="כוח מופעל בניוטון">
+              <div class="range-scale" dir="ltr"><span>−120</span><span>0</span><span>+120</span></div>
+            </div>
+            <div class="force-control friction-control">
+              <div class="force-label"><span class="force-swatch"></span><div><strong>כוח חיכוך</strong><small>ימינה (+) · שמאלה (−)</small></div><output id="frictionOutput" dir="ltr">−60 N</output></div>
+              <input id="frictionInput" type="range" min="-120" max="120" step="10" value="-60" aria-label="כוח חיכוך בניוטון">
+              <div class="range-scale" dir="ltr"><span>−120</span><span>0</span><span>+120</span></div>
+            </div>
+            <div class="force-control normal-control">
+              <div class="force-label"><span class="force-swatch"></span><div><strong>כוח נורמלי</strong><small>כלפי מעלה</small></div><output id="normalOutput" dir="ltr">80 N</output></div>
+              <input id="normalInput" type="range" min="0" max="120" step="10" value="80" aria-label="כוח נורמלי בניוטון">
+              <div class="range-scale" dir="ltr"><span>0</span><span>60</span><span>120</span></div>
+            </div>
+            <div class="force-control weight-control">
+              <div class="force-label"><span class="force-swatch"></span><div><strong>כוח הכובד</strong><small>כלפי מטה</small></div><output id="weightOutput" dir="ltr">80 N</output></div>
+              <input id="weightInput" type="range" min="0" max="120" step="10" value="80" aria-label="כוח הכובד בניוטון">
+              <div class="range-scale" dir="ltr"><span>0</span><span>60</span><span>120</span></div>
+            </div>
+            <div class="equation-box"><span>חישוב השקול</span><strong id="equationX" dir="ltr">ΣFₓ = 60 − 60 = 0 N</strong><strong id="equationY" dir="ltr">ΣFᵧ = 80 − 80 = 0 N</strong></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="screen end-screen" id="endScreen" aria-labelledby="endTitle">
+        <div class="end-card">
+          <div class="end-icon"><img src="assets/star.svg" alt=""></div>
+          <p class="eyebrow">הניסוי הושלם</p>
+          <h2 id="endTitle">הכוחות בידיים שלכם!</h2>
+          <p id="endSummary">השלמתם את כל חמש המשימות.</p>
+          <div class="score-ring"><strong id="finalScore">100</strong><span>נקודות</span></div>
+          <div class="end-stats"><div><strong id="correctCount">5</strong><span>משימות הושלמו</span></div><div><strong id="attemptCount">5</strong><span>בדיקות בסך הכול</span></div></div>
+          <div class="end-actions"><button class="primary-button" id="playAgain" type="button">משחק נוסף</button><button class="secondary-button" id="endExplore" type="button">חזרה למעבדה</button></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog class="help-dialog" id="helpDialog" aria-labelledby="helpTitle">
+    <div class="dialog-head"><div><span class="card-kicker">עזרה קצרה</span><h2 id="helpTitle">איך עובדים עם הכוחות?</h2></div><button id="closeHelp" type="button" aria-label="סגירת העזרה">×</button></div>
+    <ol class="help-steps">
+      <li><span>1</span><div><strong>משנים כוח</strong><p>גוררים את קצה החץ באזור הניסוי או מזיזים את המחוון בלוח הכוחות.</p></div></li>
+      <li><span>2</span><div><strong>קוראים את השקול</strong><p>החץ הסגול מציג את הגודל והכיוון של סכום כל הכוחות.</p></div></li>
+      <li><span>3</span><div><strong>בודקים תנועה</strong><p>שקול אפס משאיר את הגוף במנוחה. שקול שאינו אפס גורם לתנועה בכיוונו.</p></div></li>
+    </ol>
+    <div class="legend"><span><i class="legend-applied"></i>מופעל</span><span><i class="legend-friction"></i>חיכוך</span><span><i class="legend-normal"></i>נורמלי</span><span><i class="legend-weight"></i>כובד</span><span><i class="legend-net"></i>שקול</span></div>
+    <button class="primary-button" id="helpOkay" type="button">הבנתי, אפשר להתחיל</button>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <audio id="successSound" preload="auto" src="assets/success.mp3"></audio>
+  <audio id="errorSound" preload="auto" src="assets/error.mp3"></audio>
+  <audio id="finishSound" preload="auto" src="assets/finish.mp3"></audio>
+  <script src="app.js"></script>
+</body>
+</html>
