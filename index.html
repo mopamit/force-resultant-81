@@ -33,37 +33,26 @@
           <div class="start-copy">
             <span class="topic-pill">כוחות ותנועה · כיתה ח׳</span>
             <h2 id="welcomeTitle">מי מזיז את הגוף?</h2>
-            <p>משנים כוחות, עוקבים אחרי השקול ומגלים איך הגודל והכיוון משפיעים על התנועה.</p>
+            <p>מעבדת כוחות חיה: גוררים, מאזנים, בודקים ומגלים איך ארבעה כוחות מתחברים לתנועה אחת.</p>
+            <div class="start-features" aria-label="מה מחכה במעבדה">
+              <span><strong>4</strong> כוחות פעילים</span><span><strong>5</strong> משימות</span><span><strong>∞</strong> ניסויים חופשיים</span>
+            </div>
             <div class="start-actions">
-              <button class="primary-button" id="missionStart" type="button"><span>מתחילים באתגר</span><img src="assets/levels.svg" alt=""></button>
-              <button class="secondary-button" id="exploreStart" type="button">כניסה למעבדה חופשית</button>
+              <button class="primary-button start-action-button" id="exploreStart" type="button"><span>מעבדה חופשית</span></button>
+              <button class="secondary-button start-action-button" id="missionStart" type="button"><span>שאלות אתגר</span></button>
             </div>
             <button class="text-button" id="startHelp" type="button">איך משתמשים במעבדה?</button>
           </div>
           <div class="hero-visual" aria-hidden="true">
-            <svg viewBox="0 0 620 440" role="img">
-              <defs>
-                <linearGradient id="heroSky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#dff6fb"/><stop offset="1" stop-color="#f9fdff"/></linearGradient>
-                <filter id="heroShadow"><feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#17365e" flood-opacity=".18"/></filter>
-              </defs>
-              <rect x="25" y="28" width="570" height="360" rx="38" fill="url(#heroSky)" stroke="#fff" stroke-width="8"/>
-              <circle cx="500" cy="92" r="34" fill="#f7d68b" opacity=".9"/>
-              <path d="M30 306 Q155 248 285 306 T590 300 V390 H30Z" fill="#b7d9c0"/>
-              <path d="M32 336 Q190 285 337 340 T590 322 V390 H32Z" fill="#80b98e"/>
-              <ellipse cx="310" cy="350" rx="150" ry="25" fill="#17365e" opacity=".12"/>
-              <g filter="url(#heroShadow)">
-                <rect x="230" y="204" width="160" height="120" rx="18" fill="#e7b976" stroke="#17365e" stroke-width="7"/>
-                <path d="M246 222 L374 306 M374 222 L246 306" stroke="#bd8651" stroke-width="7" opacity=".65"/>
-                <circle cx="265" cy="337" r="18" fill="#17365e"/><circle cx="355" cy="337" r="18" fill="#17365e"/>
-                <circle cx="265" cy="337" r="7" fill="#fff"/><circle cx="355" cy="337" r="7" fill="#fff"/>
-              </g>
-              <g class="hero-arrow"><path d="M390 263 H535" stroke="#832058" stroke-width="14" stroke-linecap="round"/><path d="M526 233 L570 263 L526 293Z" fill="#832058"/></g>
-              <g class="hero-arrow hero-arrow-left"><path d="M230 263 H102" stroke="#6db580" stroke-width="14" stroke-linecap="round"/><path d="M110 233 L66 263 L110 293Z" fill="#6db580"/></g>
-              <g transform="translate(310 202)"><path d="M0 0 V-102" stroke="#e3a735" stroke-width="12" stroke-linecap="round"/><path d="M-28 -94 L0 -134 L28 -94Z" fill="#e3a735"/></g>
-              <g transform="translate(310 326)"><path d="M0 0 V60" stroke="#17365e" stroke-width="12" stroke-linecap="round"/><path d="M-26 53 L0 92 L26 53Z" fill="#17365e"/></g>
-              <g class="spark" transform="translate(105 112)"><path d="M0-15V15M-15 0H15" stroke="#832058" stroke-width="7" stroke-linecap="round"/></g>
-              <g class="spark spark-two" transform="translate(520 168)"><path d="M0-12V12M-12 0H12" stroke="#6db580" stroke-width="6" stroke-linecap="round"/></g>
-            </svg>
+            <div class="hero-stage">
+              <img class="hero-landscape" src="assets/landscape.png" alt="">
+              <div class="hero-force hero-force-right"><span>כוח מופעל</span></div>
+              <div class="hero-force hero-force-left"><span>חיכוך</span></div>
+              <div class="hero-force hero-force-up"><span>נורמלי</span></div>
+              <div class="hero-force hero-force-down"><span>כובד</span></div>
+              <img class="hero-cart-svg" src="assets/cart.svg" alt="">
+              <div class="hero-result"><span>שקול הכוחות</span><strong>מי מנצח?</strong></div>
+            </div>
           </div>
         </div>
       </section>
@@ -83,7 +72,8 @@
             <span class="card-kicker">המשימה שלכם</span>
             <h2 id="missionTitle">יוצרים שיווי משקל</h2>
             <p id="missionText">כוונו את הכוחות כך ששקול הכוחות יהיה אפס.</p>
-            <div class="target-badge"><span>יעד</span><strong id="missionTarget" dir="ltr">ΣF = 0 N</strong></div>
+            <div class="target-badge" id="missionTargetBadge"><span>יעד</span><strong id="missionTarget" dir="ltr">ΣF = 0 N</strong></div>
+            <button class="challenge-aid-button" id="challengeAidButton" type="button" hidden>הצגת השקול כרמז</button>
             <div class="mission-feedback" id="missionFeedback" role="status" aria-live="polite"></div>
             <button class="check-button" id="checkButton" type="button">בדיקת המשימה</button>
             <button class="next-button" id="nextButton" type="button" hidden>למשימה הבאה</button>
@@ -92,7 +82,6 @@
           <section class="simulation-card" aria-labelledby="labTitle">
             <div class="sim-heading">
               <div><span class="card-kicker">אזור הניסוי</span><h2 id="labTitle">גררו את קצות החצים או השתמשו במחוונים</h2></div>
-              <div class="resultant-readout" id="resultantReadout" aria-live="polite"><span>שקול הכוחות</span><strong dir="ltr">0 N</strong><small>הגוף במנוחה</small></div>
             </div>
             <div class="simulation-wrap" id="simulationWrap">
               <svg id="forceCanvas" class="force-canvas" viewBox="0 0 800 480" role="img" aria-labelledby="canvasTitle canvasDesc">
@@ -118,13 +107,23 @@
                   <g class="cart"><path d="M305 360H495L477 385H323Z" fill="#832058"/><circle cx="350" cy="393" r="17" fill="#17365e"/><circle cx="450" cy="393" r="17" fill="#17365e"/><circle cx="350" cy="393" r="6" fill="#fff"/><circle cx="450" cy="393" r="6" fill="#fff"/></g>
                 </g>
                 <g id="vectors"></g>
-                <g id="netVector" class="net-vector"></g>
               </svg>
+              <div class="net-vector-card" id="netVectorCard" aria-live="polite">
+                <span class="net-card-title">חץ השקול</span>
+                <svg class="net-mini-canvas" viewBox="0 0 180 92" aria-hidden="true">
+                  <defs>
+                    <marker id="miniArrowNet" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#b12b72"/></marker>
+                  </defs>
+                  <line class="net-mini-axis" x1="90" y1="46" x2="90" y2="46"></line>
+                  <g id="netVector" class="net-vector"></g>
+                </svg>
+                <strong id="netArrowValue" dir="ltr">ΣF = 0 N</strong>
+              </div>
               <div class="motion-banner" id="motionBanner"><span class="motion-icon" aria-hidden="true">•</span><strong>שיווי משקל</strong><small>השקול הוא אפס</small></div>
             </div>
             <div class="sim-footer">
               <label class="toggle"><input id="showValues" type="checkbox" checked><span></span>הצגת ערכים</label>
-              <label class="toggle"><input id="showNet" type="checkbox" checked><span></span>הצגת השקול</label>
+              <label class="toggle" id="netToggleWrap"><input id="showNet" type="checkbox" checked><span></span>הצגת חץ השקול</label>
               <label class="toggle"><input id="animateBody" type="checkbox" checked><span></span>הדמיית תנועה</label>
             </div>
           </section>
@@ -151,7 +150,13 @@
               <input id="weightInput" type="range" min="0" max="120" step="10" value="80" aria-label="כוח הכובד בניוטון">
               <div class="range-scale" dir="ltr"><span>0</span><span>60</span><span>120</span></div>
             </div>
-            <div class="equation-box"><span>חישוב השקול</span><strong id="equationX" dir="ltr">ΣFₓ = 60 − 60 = 0 N</strong><strong id="equationY" dir="ltr">ΣFᵧ = 80 − 80 = 0 N</strong></div>
+            <div class="equation-box" id="equationBox"><span>חישוב רכיבי השקול</span><strong id="equationX" dir="ltr">ΣFₓ = 60 − 60 = 0 N</strong><strong id="equationY" dir="ltr">ΣFᵧ = 80 − 80 = 0 N</strong></div>
+            <div class="resultant-readout controls-resultant" id="resultantReadout" aria-live="polite">
+              <span>חישוב השקול</span>
+              <strong dir="ltr">0 N</strong>
+              <div class="resultant-formula" id="resultantFormula" dir="ltr">|ΣF| = √(0² + 0²) = 0 N</div>
+              <small>הגוף במנוחה</small>
+            </div>
           </aside>
         </div>
       </section>

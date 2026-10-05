@@ -20,7 +20,7 @@
       text: 'אזנו את הכוחות האופקיים והאנכיים כך שהגוף יישאר במנוחה.',
       target: 'ΣF = 0 N',
       start: { applied: 60, friction: -20, normal: 80, weight: 80 },
-      check: (f, net) => net.x === 0 && net.y === 0 && Math.abs(f.applied) >= 40 && f.normal >= 40,
+      check: (_f, net) => net.x === 0 && net.y === 0,
       hint: (net) => net.x !== 0 ? 'בדקו את שני הכוחות האופקיים: כדי לאזן, הגדלים צריכים להיות שווים והכיוונים מנוגדים.' : 'האופקי מאוזן. עכשיו השוו בין הכוח הנורמלי לכוח הכובד.'
     },
     {
@@ -53,7 +53,8 @@
       target: 'ΣFₓ = +20 N · ΣFᵧ = 0 N',
       start: { applied: -40, friction: 30, normal: 90, weight: 40 },
       check: (f) => f.applied === 100 && f.friction === -80 && f.normal === 60 && f.weight === 60,
-      hint: () => 'חפשו את ארבעת הערכים המדויקים: +100, −80, 60 ו־60 ניוטון.'
+      hint: () => 'בדקו כל כוח מול הדרישה. אם תרצו, פתחו את השקול כרמז מלוח הכוחות.',
+      challenge: true
     }
   ];
 
@@ -67,6 +68,7 @@
   let muted = false;
   let toastTimer = null;
   let dragging = null;
+  let challengeAidRevealed = false;
 
   const elements = {
     screens: [...document.querySelectorAll('.screen')],
@@ -140,6 +142,10 @@
     $('missionTitle').textContent = mission.title;
     $('missionText').textContent = mission.text;
     $('missionTarget').textContent = mission.target;
+    challengeAidRevealed = false;
+    $('missionTargetBadge').hidden = Boolean(mission.challenge);
+    $('challengeAidButton').hidden = !mission.challenge;
+    $('challengeAidButton').textContent = 'הצגת השקול כרמז';
     $('missionCounter').textContent = `משימה ${missionIndex + 1} מתוך ${missions.length}`;
     $('progressFill').style.width = `${((missionIndex + 1) / missions.length) * 100}%`;
     elements.feedback.textContent = '';
@@ -167,10 +173,9 @@
 
   function vectorStart(key, value) {
     if (key === 'applied' || key === 'friction') {
-      return { x: CENTER.x + (value >= 0 ? 74 : -74), y: key === 'applied' ? 275 : 328 };
+      return { x: CENTER.x, y: key === 'applied' ? 180 : 220 };
     }
-    if (key === 'normal') return { x: CENTER.x, y: 245 };
-    return { x: CENTER.x, y: 357 };
+    return { x: 530, y: 315 };
   }
 
   function vectorEnd(key, value) {
@@ -182,13 +187,17 @@
 
   function vectorLabel(key, value, end, color) {
     const horizontal = key === 'applied' || key === 'friction';
-    const x = horizontal ? end.x + (value >= 0 ? 48 : -48) : end.x + 58;
-    const y = end.y;
+    const start = vectorStart(key, value);
+    const length = Math.hypot(end.x-start.x,end.y-start.y);
+    const inside = horizontal && length >= 65;
+    const x = horizontal ? (inside ? (start.x+end.x)/2-(value>=0?5:-5) : end.x+(value>=0?34:-34)) : end.x+40;
+    const y = horizontal ? end.y : start.y + (key==='normal'?-1:1)*Math.max(22,length/2);
     const group = makeSvg('g', { class: 'vector-label', transform: `translate(${x} ${y})` });
-    const rect = makeSvg('rect', { x: -40, y: -22, width: 80, height: 36, rx: 12, fill: '#fff', stroke: color, 'stroke-opacity': '.18' });
-    const text = makeSvg('text', { x: 0, y: 3, fill: color, direction: 'ltr', 'unicode-bidi': 'bidi-override', 'text-anchor': 'middle' });
+    const rect = makeSvg('rect', { x: -28, y: -11, width: 56, height: 22, rx: 7, fill: '#fff', 'fill-opacity': '.94' });
+    const text = makeSvg('text', { x: 0, y: 4, fill: inside ? '#fff' : color, direction: 'ltr', 'unicode-bidi': 'bidi-override', 'text-anchor': 'middle', style:'font-size:12px;font-weight:800' });
     text.textContent = `${displayForce(key, value)} N`;
-    group.append(rect, text);
+    if (!inside) group.append(rect);
+    group.append(text);
     return group;
   }
 
@@ -199,11 +208,16 @@
       const end = vectorEnd(key, forces[key]);
       const group = makeSvg('g', { class: 'force-vector', tabindex: '0', role: 'slider', 'aria-label': `${meta.label}, ${displayForce(key, forces[key])} ניוטון`, 'aria-valuemin': meta.min, 'aria-valuemax': meta.max, 'aria-valuenow': forces[key], 'data-force': key });
       const hit = makeSvg('line', { class: 'hit-area', x1: start.x, y1: start.y, x2: end.x, y2: end.y });
-      const line = makeSvg('line', { class: 'vector-line', x1: start.x, y1: start.y, x2: end.x, y2: end.y, stroke: meta.color, 'marker-end': `url(#${meta.marker})` });
-      if (forces[key] === 0) line.removeAttribute('marker-end');
+      const length = Math.hypot(end.x-start.x,end.y-start.y);
+      const head = Math.min(17,length*.55), half = Math.min(17,length*.6);
+      const shaft = Math.min(9,half*.55);
+      const angle = Math.atan2(end.y-start.y,end.x-start.x)*180/Math.PI;
+      const line = makeSvg('path', { class:'force-shape', d:length ? `M0,${-shaft} H${length-head} V${-half} L${length},0 L${length-head},${half} V${shaft} H0 Z` : '', transform:`translate(${start.x} ${start.y}) rotate(${angle})`, fill:meta.color,stroke:'#17365e','stroke-width':1,'stroke-linejoin':'round' });
+      const name = makeSvg('text',{x:meta.axis==='x'?(start.x+end.x)/2:start.x+40,y:meta.axis==='x'?start.y-22:start.y+(key==='normal'?-1:1)*Math.max(22,length/2)-14,'text-anchor':'middle',fill:meta.color,class:'force-name',style:'font-size:11px;font-weight:700;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round'});
+      name.textContent = meta.label;
       const handle = makeSvg('circle', { class: 'handle', cx: end.x, cy: end.y, r: 13, fill: 'transparent', stroke: 'transparent' });
       const label = vectorLabel(key, forces[key], end, meta.color);
-      group.append(hit, line, handle, label);
+      group.append(hit, line, handle, name, label);
       group.addEventListener('pointerdown', startDrag);
       group.addEventListener('keydown', vectorKeydown);
       elements.vectors.appendChild(group);
@@ -211,26 +225,46 @@
     elements.vectors.querySelectorAll('.vector-label').forEach((label) => { label.style.display = $('showValues').checked ? '' : 'none'; });
   }
 
+  function resultantVisible() {
+    const mission = mode === 'missions' ? missions[missionIndex] : null;
+    return !mission?.challenge || challengeAidRevealed;
+  }
+
   function renderNet() {
     const net = forceResult();
+    const visible = resultantVisible();
+    const showArrow = visible && $('showNet').checked;
+    const netCard = $('netVectorCard');
+
+    elements.resultant.hidden = !visible;
+    $('equationBox').hidden = !visible;
+    $('netToggleWrap').hidden = !visible;
+    netCard.hidden = !showArrow;
+    netCard.classList.toggle('is-zero', net.x === 0 && net.y === 0);
+    $('netArrowValue').textContent = `ΣF = ${magnitude(net)} N`;
     elements.netVector.innerHTML = '';
-    elements.netVector.style.display = $('showNet').checked ? '' : 'none';
-    const netScale = 0.28;
-    const lengthX = net.x * netScale;
-    const lengthY = -net.y * netScale;
-    if (net.x !== 0 || net.y !== 0) {
-      const origin = { x: 665, y: 90 };
-      const line = makeSvg('line', { x1: origin.x, y1: origin.y, x2: origin.x + lengthX, y2: origin.y + lengthY, 'marker-end': 'url(#arrowNet)' });
-      const label = makeSvg('text', { x: 665, y: 150, direction: 'ltr', 'unicode-bidi': 'bidi-override', 'text-anchor': 'middle' });
-      label.textContent = `ΣF = ${magnitude(net)} N`;
-      elements.netVector.append(line, label);
-    }
+
+    if (!showArrow || (net.x === 0 && net.y === 0)) return;
+
+    const origin = { x: 90, y: 46 };
+    const maxLen = 55;
+    const rawLen = Math.hypot(net.x, net.y);
+    const scale = Math.min(maxLen / rawLen, .55);
+    const endX = origin.x + net.x * scale;
+    const endY = origin.y - net.y * scale;
+    const line = makeSvg('line', {
+      x1: origin.x, y1: origin.y, x2: endX, y2: endY,
+      'marker-end': 'url(#miniArrowNet)'
+    });
+    elements.netVector.append(line);
   }
 
   function updateReadout() {
     const net = forceResult();
     const direction = directionText(net);
-    elements.resultant.querySelector('strong').textContent = `${magnitude(net)} N`;
+    const netMagnitude = magnitude(net);
+    elements.resultant.querySelector('strong').textContent = `${netMagnitude} N`;
+    $('resultantFormula').textContent = `|ΣF| = √((${signed(net.x)})² + (${signed(net.y)})²) = ${netMagnitude} N`;
     elements.resultant.querySelector('small').textContent = direction.detail;
     elements.motionBanner.querySelector('strong').textContent = direction.title;
     elements.motionBanner.querySelector('small').textContent = direction.detail;
@@ -244,9 +278,10 @@
     elements.movingBody.style.removeProperty('--motion-y');
     if ($('animateBody').checked && !dragging && !matchMedia('(prefers-reduced-motion: reduce)').matches && (net.x !== 0 || net.y !== 0)) {
       const length = Math.hypot(net.x, net.y);
-      const x = net.x / length * 20, y = -net.y / length * 20;
+      const x = net.x / length * 160, y = -net.y / length * (net.y < 0 ? 25 : 65);
+      const duration = Math.max(1800, 10000 / Math.sqrt(length / 10));
       for (const node of [elements.movingBody, elements.vectors]) {
-        node.animate([{transform:'translate(0,0)'},{transform:`translate(${x}px,${y}px)`}], {duration:1400,easing:'cubic-bezier(.45,0,.8,1)',fill:'forwards'});
+        node.animate([{transform:'translate(0,0)'},{transform:`translate(${x}px,${y}px)`}], {duration,easing:'ease-in',fill:'forwards'});
       }
     }
   }
@@ -292,11 +327,9 @@
     const meta = FORCE_META[dragging];
     let value;
     if (meta.axis === 'x') {
-      if (local.x > CENTER.x + 50) value = (local.x - (CENTER.x + 74)) / FORCE_SCALE;
-      else if (local.x < CENTER.x - 50) value = (local.x - (CENTER.x - 74)) / FORCE_SCALE;
-      else value = 0;
-    } else if (meta.axis === 'up') value = (245 - local.y) / VERTICAL_SCALE;
-    else value = (local.y - 357) / VERTICAL_SCALE;
+      value = (local.x - CENTER.x) / FORCE_SCALE;
+    } else if (meta.axis === 'up') value = (315 - local.y) / VERTICAL_SCALE;
+    else value = (local.y - 315) / VERTICAL_SCALE;
     forces[dragging] = clampStep(value, meta.min, meta.max);
     updateAll();
   }
@@ -339,6 +372,16 @@
       elements.feedback.innerHTML = `<strong>עוד כיוון קטן.</strong> ${mission.hint(net)}`;
       playSound('errorSound');
     }
+  }
+
+  function revealChallengeAid() {
+    const mission = missions[missionIndex];
+    if (mode !== 'missions' || !mission.challenge) return;
+    challengeAidRevealed = true;
+    $('showNet').checked = true;
+    $('challengeAidButton').textContent = 'השקול מוצג כרמז';
+    updateAll();
+    showToast('השקול נפתח כרמז');
   }
 
   function nextMission() {
@@ -399,6 +442,7 @@
     $('resetButton').addEventListener('click', resetCurrent);
     $('checkButton').addEventListener('click', checkMission);
     $('nextButton').addEventListener('click', nextMission);
+    $('challengeAidButton').addEventListener('click', revealChallengeAid);
     $('soundButton').addEventListener('click', toggleSound);
     ['helpButton', 'startHelp'].forEach((id) => $(id).addEventListener('click', openHelp));
     ['closeHelp', 'helpOkay'].forEach((id) => $(id).addEventListener('click', closeHelp));
@@ -415,6 +459,23 @@
   }
 
   function init() {
+    const canvas = $('forceCanvas');
+    canvas.querySelectorAll(':scope > rect, .background-art').forEach(node => node.remove());
+    const background = makeSvg('image', {href:'assets/landscape.png',x:0,y:0,width:800,height:480,preserveAspectRatio:'xMidYMid slice'});
+    canvas.insertBefore(background, elements.movingBody);
+    elements.movingBody.innerHTML = '';
+    // Use the transparent SVG cart in the laboratory as well as on the home screen.
+    // No clipping mask is needed, so the cart blends naturally into the landscape.
+    elements.movingBody.appendChild(makeSvg('image', {
+      href:'assets/cart.svg',
+      x:258,
+      y:200,
+      width:284,
+      height:228,
+      preserveAspectRatio:'xMidYMid meet',
+      class:'cart-art'
+    }));
+    elements.motionBanner.querySelector('.motion-icon').style.display = 'none';
     document.querySelectorAll('#forceCanvas marker').forEach(marker => {
       marker.setAttribute('markerUnits', 'userSpaceOnUse');
       marker.setAttribute('markerWidth', '14');

@@ -45,6 +45,12 @@ async function solve(page, values, final = false) {
   for (const [key,value] of Object.entries({applied:110,friction:70,normal:120,weight:10})) await setForce(page,key,value);
   await page.waitForTimeout(1500);
   await page.screenshot({ path: '/private/tmp/force-prisma-extreme.png', fullPage: true });
+  const geometry = await page.locator('#forceCanvas').evaluate(svg => {
+    const paths = [...svg.querySelectorAll('.force-shape')];
+    return paths.map(path => ({ width:path.getBBox().width, height:path.getBBox().height, d:path.getAttribute('d') }));
+  });
+  if (geometry.length !== 4 || geometry.some(p => !p.d || p.width <= 0 || p.height <= 0)) throw new Error('Every nonzero force needs a filled arrow');
+  if (geometry[3].width >= geometry[0].width / 5) throw new Error('Small force arrow must remain proportional');
   await solve(page, { applied: 60, friction: -60, normal: 80, weight: 80 });
   await solve(page, { applied: 80, friction: -40, normal: 90, weight: 90 });
   await solve(page, { applied: -70, friction: 40, normal: 60, weight: 60 });
