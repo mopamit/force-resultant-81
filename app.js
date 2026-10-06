@@ -464,16 +464,16 @@
     const background = makeSvg('image', {href:'assets/landscape.png',x:0,y:0,width:800,height:480,preserveAspectRatio:'xMidYMid slice'});
     canvas.insertBefore(background, elements.movingBody);
     elements.movingBody.innerHTML = '';
-    // Use the transparent SVG cart in the laboratory as well as on the home screen.
-    // No clipping mask is needed, so the cart blends naturally into the landscape.
+    // Use the uploaded transparent bird PNG in the laboratory as well as on the home screen.
+    // The bird replaces the cart everywhere in the app.
     elements.movingBody.appendChild(makeSvg('image', {
-      href:'assets/cart.svg',
-      x:258,
-      y:200,
-      width:284,
-      height:228,
+      href:'assets/bird.png',
+      x:246,
+      y:140,
+      width:308,
+      height:308,
       preserveAspectRatio:'xMidYMid meet',
-      class:'cart-art'
+      class:'bird-art'
     }));
     elements.motionBanner.querySelector('.motion-icon').style.display = 'none';
     document.querySelectorAll('#forceCanvas marker').forEach(marker => {
